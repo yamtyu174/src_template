@@ -12,6 +12,7 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         extra="ignore"
     )
+    PYTHONPATH: str = "src"
     log: LoggerSettings = LoggerSettings()
 
 def _register_environ(settings: BaseSettings):
@@ -24,7 +25,7 @@ def _register_environ(settings: BaseSettings):
             
 @exception_handler
 @lru_cache(maxsize=1)
-def get_settings(into_env: bool = False) -> BaseSettings | None:
+def get_settings(into_env: bool = False) -> BaseSettings:
     try:
         settings = Settings()
     except Exception as e:

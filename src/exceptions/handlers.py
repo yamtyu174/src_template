@@ -18,4 +18,9 @@ def exception_handler(func) -> None | object:
         except Exception as e:
             logger.critical(f"Unexpected error: {e}", exc_info=True)
             raise
+    
+    for attr in ['cache_clear', 'cache_info', 'cache_parameters']:
+        if hasattr(func, attr):
+            setattr(wrapper, attr, getattr(func, attr))
+            
     return wrapper
